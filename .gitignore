@@ -1,0 +1,6 @@
+# Model weights and tokenizer files (~1.4 GB per checkpoint)
+qwen3/
+# Local environment
+.venv/
+__pycache__/
+*.pyc
