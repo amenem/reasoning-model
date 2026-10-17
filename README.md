@@ -86,13 +86,31 @@ point in the book — there is no KV cache
 yet, so every step re-processes the whole sequence. Chapter 2's later sections
 add the cache (`generate_text_basic_stream_cache`) and `torch.compile`.
 
+## Generate text in a notebook
+
+```bash
+./.venv/bin/jupyter lab generate_text.ipynb
+```
+
+`generate_text.ipynb` loads the model once, then exposes a `generate(prompt)`
+helper so you can keep trying prompts without reloading the weights. It also
+compares the two code paths from chapter 2 on the same prompt:
+
+| | 40 tokens |
+| --- | --- |
+| `generate_text_basic_stream` (listing 2.2) | 8.30 s, 4 tok/s |
+| `generate_text_basic_stream_cache` (listing 2.4) | 3.14 s, 12 tok/s |
+
+The notebook is committed without cell outputs; run it to populate them.
+
 ## Layout
 
 ```
-download_model.py   Fetch tokenizer + weights into qwen3/
-verify_setup.py     Device, tokenizer, model load, and generation check
-requirements.txt    torch, tokenizers, reasoning-from-scratch
-qwen3/              Downloaded weights (git-ignored, ~1.4 GB)
+download_model.py    Fetch tokenizer + weights into qwen3/
+verify_setup.py      Device, tokenizer, model load, and generation check
+generate_text.ipynb  Interactive text generation, with/without KV cache
+requirements.txt     torch, tokenizers, reasoning-from-scratch
+qwen3/               Downloaded weights (git-ignored, ~1.4 GB)
 ```
 
 `qwen3/` and `.venv/` are git-ignored, so the 1.4 GB of weights and the 585 MB
